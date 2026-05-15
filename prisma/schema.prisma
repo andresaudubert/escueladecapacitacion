@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RecursoTipo {
+  PDF
+  LINK
+}
+
+model Recurso {
+  id          String      @id @default(cuid())
+  titulo      String
+  descripcion String?     @db.Text
+  categoria   String
+  tipo        RecursoTipo
+  url         String      // URL de Cloudinary (PDF) o link externo
+  publicId    String?     // Solo para PDFs en Cloudinary
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([categoria])
+  @@index([createdAt])
+}
