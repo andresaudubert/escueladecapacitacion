@@ -51,9 +51,9 @@ export default function NavBar() {
                 href={link.href}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                   isCampus
-                    ? "bg-amber-500 hover:bg-amber-400 text-white ml-2"
+                    ? "bg-orange-500 hover:bg-orange-400 text-white ml-2"
                     : isActive
-                    ? "bg-red-50 text-red-700"
+                    ? "bg-orange-50 text-orange-600"
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 }`}
               >
@@ -87,9 +87,9 @@ export default function NavBar() {
                 onClick={() => setOpen(false)}
                 className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                   isCampus
-                    ? "bg-amber-500 text-white"
+                    ? "bg-orange-500 text-white"
                     : isActive
-                    ? "bg-red-50 text-red-700"
+                    ? "bg-orange-50 text-orange-600"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
