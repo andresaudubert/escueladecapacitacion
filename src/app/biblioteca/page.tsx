@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma"
 
-const CATEGORIAS = ["Todos", "Reglamentos", "Manuales", "Circulares", "Recursos", "Otros"]
+const CATEGORIAS = ["Todos", "Manuales de niveles", "Reglamentaciones", "Planillas útiles", "Contenido de especialidades", "Miscelánea"]
 
 export const revalidate = 60
 

@@ -13,7 +13,7 @@ type Recurso = {
   createdAt: string
 }
 
-const CATEGORIAS = ["Reglamentos", "Manuales", "Circulares", "Recursos", "Otros"]
+const CATEGORIAS = ["Manuales de niveles", "Reglamentaciones", "Planillas útiles", "Contenido de especialidades", "Miscelánea"]
 
 export default function AdminBibliotecaPage() {
   const router = useRouter()
