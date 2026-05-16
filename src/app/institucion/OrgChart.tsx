@@ -1,156 +1,137 @@
 "use client"
 
-// ── Paleta ──────────────────────────────────────────────────────────────────
-const C = {
-  director:   { fill: "#f97316", text: "#fff", r: 38 },
-  management: { fill: "#fb923c", text: "#fff", r: 28 },
-  regional:   { fill: "#0d9488", text: "#fff", r: 23 },
-  zona:       { fill: "#5eead4", text: "#0f5752", r: 18 },
-  dept:       { fill: "#e2e8f0", text: "#334155", r: 17 },
-}
+const W = 120, H = 38, RX = 8
 
-// ── Nodos ────────────────────────────────────────────────────────────────────
-// Posiciones calculadas para un layout hub-and-spoke que entra en pantalla.
-// Rama izquierda: estructura territorial (Vicedirector → Regionales → Zonas)
-// Rama derecha: departamentos de especialidades (CoordDepts → 15 depts en arco)
 const NODES = [
-  // ── Core ─────────────────────────────────────────────
-  { id: "dir", x: 430, y: 245, label: "Andrés Audubert",     sub: "Director",              ...C.director   },
-  { id: "vd",  x: 280, y: 245, label: "S. Pérez Campana",    sub: "Vicedirector",          ...C.management },
-  { id: "cd",  x: 580, y: 245, label: "Gabriela Paoli",      sub: "Coord. Departamentos",  ...C.management },
-
-  // ── Regionales ───────────────────────────────────────
-  { id: "rno", x: 164, y: 168, label: "Carla González",  sub: "Regional Norte/Oeste", ...C.regional },
-  { id: "rs",  x: 164, y: 328, label: "Daniela Marín",   sub: "Regional Sur",         ...C.regional },
-
-  // ── Zonas Norte/Oeste ────────────────────────────────
-  { id: "z1", x:  52, y: 100, label: "C. Verna",       sub: "Zona 1", ...C.zona },
-  { id: "z2", x:  40, y: 168, label: "I. Chiurazzi",   sub: "Zona 2", ...C.zona },
-  { id: "z3", x:  78, y: 248, label: "H. Yrigoyen",    sub: "Zona 3", ...C.zona },
-
-  // ── Zonas Sur ────────────────────────────────────────
-  { id: "z4", x:  62, y: 248, label: "J. Fredes Fdez.", sub: "Zona 4", ...C.zona },
-  { id: "z5", x:  40, y: 328, label: "M. Muñoz",       sub: "Zona 5", ...C.zona },
-  { id: "z6", x:  78, y: 408, label: "E. Cleman",      sub: "Zona 6", ...C.zona },
-
-  // ── Departamentos (arco derecho desde CoordDepts) ────
-  // r=165, ángulos de -82° a 104°, 15 nodos, paso ~13°
-  { id: "d1",  x: 608, y:  81, label: "L. Pellegrino",    sub: "Fuego",              ...C.dept },
-  { id: "d2",  x: 644, y:  82, label: "J. Toseli Salazar",sub: "Socorrismo",         ...C.dept },
-  { id: "d3",  x: 678, y:  90, label: "J. Ruiz",          sub: "Rescate Vehicular",  ...C.dept },
-  { id: "d4",  x: 709, y: 106, label: "M. Martínez",      sub: "Rescate Cuerdas",    ...C.dept },
-  { id: "d5",  x: 734, y: 130, label: "J. Serraino",      sub: "Inc. Forestales",    ...C.dept },
-  { id: "d6",  x: 752, y: 162, label: "R. Sacco",         sub: "Mat. Peligrosos",    ...C.dept },
-  { id: "d7",  x: 760, y: 198, label: "A. Tosco",         sub: "SCI",                ...C.dept },
-  { id: "d8",  x: 758, y: 236, label: "P. Ávalo",         sub: "Búsq./Rescate Canes",...C.dept },
-  { id: "d9",  x: 746, y: 273, label: "D. Rojas",         sub: "Rescate Acuático",   ...C.dept },
-  { id: "d10", x: 726, y: 307, label: "R. Martínez",      sub: "Protocolo",          ...C.dept },
-  { id: "d11", x: 697, y: 336, label: "J. Bailo",         sub: "Seg. Bomberil",      ...C.dept },
-  { id: "d12", x: 661, y: 357, label: "M. Meringer",      sub: "Op. de Bombas",      ...C.dept },
-  { id: "d13", x: 622, y: 369, label: "G. Paoli",         sub: "Psicología Emerg.",  ...C.dept },
-  { id: "d14", x: 584, y: 371, label: "D. Marín",         sub: "Búsq./Rescate Estr.",...C.dept },
-  { id: "d15", x: 548, y: 362, label: "L. Cortejarena",   sub: "Cadetes",            ...C.dept },
+  { id: "dir", cx: 500, cy: 34,  label: "Andrés Audubert",   sub: "Director"             },
+  { id: "vd",  cx: 370, cy: 119, label: "S. Pérez Campana",  sub: "Vicedirector"         },
+  { id: "cd",  cx: 630, cy: 119, label: "Gabriela Paoli",    sub: "Coord. Departamentos" },
+  { id: "rno", cx: 190, cy: 204, label: "Carla González",    sub: "Regional Norte/Oeste" },
+  { id: "rs",  cx: 550, cy: 204, label: "Daniela Marín",     sub: "Regional Sur"         },
+  { id: "z1",  cx: 60,  cy: 289, label: "C. Verna",          sub: "Zona 1"               },
+  { id: "z2",  cx: 190, cy: 289, label: "I. Chiurazzi",      sub: "Zona 2"               },
+  { id: "z3",  cx: 320, cy: 289, label: "H. Yrigoyen",       sub: "Zona 3"               },
+  { id: "z4",  cx: 420, cy: 289, label: "J. Fredes Fdez.",   sub: "Zona 4"               },
+  { id: "z5",  cx: 550, cy: 289, label: "M. Muñoz",          sub: "Zona 5"               },
+  { id: "z6",  cx: 680, cy: 289, label: "E. Cleman",         sub: "Zona 6"               },
 ]
 
-// ── Conexiones ───────────────────────────────────────────────────────────────
-const EDGES: [string, string][] = [
-  ["dir","vd"], ["dir","cd"],
-  ["vd","rno"], ["vd","rs"],
-  ["rno","z1"], ["rno","z2"], ["rno","z3"],
-  ["rs","z4"],  ["rs","z5"],  ["rs","z6"],
-  ["cd","d1"],  ["cd","d2"],  ["cd","d3"],  ["cd","d4"],  ["cd","d5"],
-  ["cd","d6"],  ["cd","d7"],  ["cd","d8"],  ["cd","d9"],  ["cd","d10"],
-  ["cd","d11"], ["cd","d12"], ["cd","d13"], ["cd","d14"], ["cd","d15"],
+const EDGES: [string, string[]][] = [
+  ["dir", ["vd", "cd"]],
+  ["vd",  ["rno", "rs"]],
+  ["rno", ["z1", "z2", "z3"]],
+  ["rs",  ["z4", "z5", "z6"]],
 ]
 
-function initials(name: string) {
-  return name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase()
-}
+const MAP = Object.fromEntries(NODES.map(n => [n.id, n]))
+
+const DEPTS = [
+  { dept: "Fuego",                     nombre: "Lucas Pellegrino"          },
+  { dept: "Socorrismo",                nombre: "Julián Toseli Salazar"     },
+  { dept: "Rescate Vehicular",         nombre: "Jorge Ruiz"                },
+  { dept: "Rescate con Cuerdas",       nombre: "Marcelo Martínez"          },
+  { dept: "Inc. Forestales",           nombre: "Juan Serraino"             },
+  { dept: "Mat. Peligrosos",           nombre: "Roberto Sacco"             },
+  { dept: "SCI",                       nombre: "Alina Tosco"               },
+  { dept: "Búsq./Rescate Canes",       nombre: "Pamela Ávalo"              },
+  { dept: "Rescate Acuático",          nombre: "David Rojas"               },
+  { dept: "Protocolo y Ceremonial",    nombre: "Roque Martínez"            },
+  { dept: "Seguridad Bomberil",        nombre: "Jazmín Bailo"              },
+  { dept: "Op. de Bombas",             nombre: "Martín Meringer"           },
+  { dept: "Psicología Emergencia",     nombre: "Gabriela Paoli"            },
+  { dept: "Búsq./Rescate Estructuras", nombre: "Daniela Marín"             },
+  { dept: "Cadetes",                   nombre: "Leandro Cortejarena"       },
+]
 
 export default function OrgChart() {
-  const map = Object.fromEntries(NODES.map((n) => [n.id, n]))
-
   return (
-    <div className="w-full rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-      <svg
-        viewBox="18 55 768 360"
-        className="w-full"
-        style={{ maxHeight: 480 }}
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Líneas de conexión */}
-        {EDGES.map(([a, b]) => {
-          const fa = map[a], fb = map[b]
-          return (
-            <line key={`${a}-${b}`}
-              x1={fa.x} y1={fa.y} x2={fb.x} y2={fb.y}
-              stroke="#e2e8f0" strokeWidth="1.5"
-            />
-          )
-        })}
+    <div className="space-y-6">
 
-        {/* Nodos */}
-        {NODES.map((n) => {
-          const fontSize = n.r >= 35 ? 12 : n.r >= 25 ? 9 : n.r >= 20 ? 7.5 : 6.5
-          const labelSize = n.r >= 35 ? 7.5 : n.r >= 25 ? 6.5 : 5.5
-          const labelY = n.y + n.r + 9
+      {/* ── Árbol territorial ─────────────────────────────── */}
+      <div className="w-full rounded-2xl border border-gray-200 bg-white shadow-sm overflow-x-auto">
+        <svg
+          viewBox="-5 -5 755 325"
+          className="w-full"
+          style={{ minWidth: 580, maxHeight: 420 }}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Conectores */}
+          {EDGES.map(([parentId, childIds]) => {
+            const parent   = MAP[parentId]
+            const children = childIds.map(id => MAP[id])
+            const y1   = parent.cy + H / 2
+            const y2   = children[0].cy - H / 2
+            const ymid = (y1 + y2) / 2
+            const minX = Math.min(...children.map(c => c.cx))
+            const maxX = Math.max(...children.map(c => c.cx))
+            return (
+              <g key={parentId} stroke="#fdba74" strokeWidth="1.5" fill="none">
+                <line x1={parent.cx} y1={y1}   x2={parent.cx} y2={ymid} />
+                <line x1={minX}      y1={ymid}  x2={maxX}      y2={ymid} />
+                {children.map(c => (
+                  <line key={c.id} x1={c.cx} y1={ymid} x2={c.cx} y2={c.cy - H / 2} />
+                ))}
+              </g>
+            )
+          })}
 
-          return (
+          {/* Tarjetas */}
+          {NODES.map(n => (
             <g key={n.id}>
-              {/* Círculo principal */}
-              <circle cx={n.x} cy={n.y} r={n.r} fill={n.fill} />
-              {/* Iniciales */}
+              <rect
+                x={n.cx - W / 2} y={n.cy - H / 2}
+                width={W} height={H} rx={RX}
+                fill="#fff7ed" stroke="#f97316" strokeWidth="1.2"
+              />
               <text
-                x={n.x} y={n.y + fontSize * 0.38}
+                x={n.cx} y={n.cy - 4}
                 textAnchor="middle"
-                fontSize={fontSize}
-                fontWeight="800"
-                fill={n.text}
-                fontFamily="system-ui, -apple-system, sans-serif"
-              >
-                {initials(n.label)}
-              </text>
-              {/* Nombre */}
-              <text
-                x={n.x} y={labelY}
-                textAnchor="middle"
-                fontSize={labelSize}
-                fontWeight="600"
-                fill="#1e293b"
+                fontSize="8.5"
+                fontWeight="700"
+                fill="#1c1917"
                 fontFamily="system-ui, -apple-system, sans-serif"
               >
                 {n.label}
               </text>
-              {/* Rol */}
               <text
-                x={n.x} y={labelY + labelSize + 1.5}
+                x={n.cx} y={n.cy + 9}
                 textAnchor="middle"
-                fontSize={Math.max(labelSize - 0.5, 4.5)}
-                fill="#64748b"
+                fontSize="7"
+                fill="#9a3412"
                 fontFamily="system-ui, -apple-system, sans-serif"
               >
                 {n.sub}
               </text>
             </g>
-          )
-        })}
-      </svg>
-
-      {/* Leyenda */}
-      <div className="flex flex-wrap gap-4 px-6 py-3 border-t border-gray-100 text-xs text-gray-500">
-        {[
-          { color: "#f97316", label: "Director" },
-          { color: "#fb923c", label: "Equipo de Gestión" },
-          { color: "#0d9488", label: "Coordinación Regional" },
-          { color: "#5eead4", label: "Dirección Zonal" },
-          { color: "#e2e8f0", label: "Dpto. de Especialidades", dark: true },
-        ].map(({ color, label, dark }) => (
-          <div key={label} className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: color, border: dark ? "1px solid #cbd5e1" : "none" }} />
-            {label}
-          </div>
-        ))}
+          ))}
+        </svg>
       </div>
+
+      {/* ── Departamentos de Especialidades ───────────────── */}
+      <div>
+        <div className="flex items-center gap-3 mb-3">
+          <div className="h-px flex-1 bg-gray-200" />
+          <p className="text-[11px] font-bold text-orange-600 uppercase tracking-widest whitespace-nowrap">
+            Departamentos de Especialidades
+          </p>
+          <div className="h-px flex-1 bg-gray-200" />
+        </div>
+        <p className="text-xs text-gray-400 mb-3 text-center">
+          Bajo la coordinación de Gabriela Paoli
+        </p>
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+          {DEPTS.map(d => (
+            <div
+              key={d.dept}
+              className="bg-orange-50 border border-orange-200 rounded-xl px-2 py-2.5 text-center"
+            >
+              <p className="text-[10px] font-bold text-orange-800 leading-tight">{d.dept}</p>
+              <p className="text-[9px] text-gray-600 mt-0.5 leading-tight">{d.nombre}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   )
 }
