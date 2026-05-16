@@ -78,8 +78,8 @@ export default function InicioPage() {
             <h1 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight">
               Escuela de Capacitación
             </h1>
-            <p className="text-sm text-gray-500 max-w-xl">
-              Formamos a los bomberos voluntarios de La Pampa con excelencia, compromiso y vocación de servicio.
+            <p className="text-base italic text-gray-600 max-w-xl border-l-4 border-orange-400 pl-4">
+              "Ser bombero es voluntario, saber serlo es obligatorio."
             </p>
             <div className="flex flex-col sm:flex-row gap-3 mt-1">
               <Link

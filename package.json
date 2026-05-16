@@ -16,7 +16,8 @@
     "@prisma/client": "^6",
     "prisma": "^6",
     "cloudinary": "^2",
-    "jose": "^5"
+    "jose": "^5",
+    "resend": "^4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
