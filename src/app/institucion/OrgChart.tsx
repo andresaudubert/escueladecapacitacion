@@ -5,17 +5,17 @@ import { useState } from "react"
 const W = 120, H = 38, RX = 8
 
 const NODES = [
-  { id: "dir", cx: 500, cy: 34,  label: "Andrés Audubert",   sub: "Director"             },
-  { id: "vd",  cx: 370, cy: 119, label: "S. Pérez Campana",  sub: "Vicedirector"         },
-  { id: "cd",  cx: 630, cy: 119, label: "Gabriela Paoli",    sub: "Coord. Departamentos" },
+  { id: "dir", cx: 510, cy: 34,  label: "Andrés Audubert",   sub: "Director"             },
+  { id: "vd",  cx: 390, cy: 119, label: "S. Pérez Campana",  sub: "Vicedirector"         },
+  { id: "cd",  cx: 640, cy: 119, label: "Gabriela Paoli",    sub: "Coord. Departamentos" },
   { id: "rno", cx: 190, cy: 204, label: "Carla González",    sub: "Regional Norte/Oeste" },
-  { id: "rs",  cx: 550, cy: 204, label: "Daniela Marín",     sub: "Regional Sur"         },
+  { id: "rs",  cx: 590, cy: 204, label: "Daniela Marín",     sub: "Regional Sur"         },
   { id: "z1",  cx: 60,  cy: 289, label: "C. Verna",          sub: "Zona 1"               },
   { id: "z2",  cx: 190, cy: 289, label: "I. Chiurazzi",      sub: "Zona 2"               },
   { id: "z3",  cx: 320, cy: 289, label: "H. Yrigoyen",       sub: "Zona 3"               },
-  { id: "z4",  cx: 420, cy: 289, label: "J. Fredes Fdez.",   sub: "Zona 4"               },
-  { id: "z5",  cx: 550, cy: 289, label: "M. Muñoz",          sub: "Zona 5"               },
-  { id: "z6",  cx: 680, cy: 289, label: "E. Cleman",         sub: "Zona 6"               },
+  { id: "z4",  cx: 460, cy: 289, label: "J. Fredes Fdez.",   sub: "Zona 4"               },
+  { id: "z5",  cx: 590, cy: 289, label: "M. Muñoz",          sub: "Zona 5"               },
+  { id: "z6",  cx: 720, cy: 289, label: "E. Cleman",         sub: "Zona 6"               },
 ]
 
 const EDGES: [string, string[]][] = [
@@ -260,7 +260,7 @@ export default function OrgChart() {
           Hacé clic en una Zona para ver el equipo y los cuarteles
         </p>
         <svg
-          viewBox="-5 -5 755 325"
+          viewBox="-5 -5 790 325"
           className="w-full"
           style={{ minWidth: 580, maxHeight: 420 }}
           xmlns="http://www.w3.org/2000/svg"
