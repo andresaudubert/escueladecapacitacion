@@ -8,7 +8,7 @@ type Recurso = {
   titulo: string
   descripcion: string | null
   categoria: string
-  tipo: "PDF" | "LINK"
+  tipo: "PDF" | "EXCEL" | "LINK"
   url: string
   createdAt: string
 }
@@ -29,7 +29,7 @@ export default function AdminBibliotecaPage() {
     titulo: "",
     descripcion: "",
     categoria: "Recursos",
-    tipo: "LINK" as "PDF" | "LINK",
+    tipo: "LINK" as "PDF" | "EXCEL" | "LINK",
     url: "",
   })
   const [file, setFile] = useState<File | null>(null)
@@ -64,7 +64,7 @@ export default function AdminBibliotecaPage() {
       let publicId: string | undefined
 
       // Si es PDF, subir primero a Cloudinary
-      if (form.tipo === "PDF" && file) {
+      if ((form.tipo === "PDF" || form.tipo === "EXCEL") && file) {
         const fd = new FormData()
         fd.append("file", file)
         const uploadRes = await fetch("/api/biblioteca/upload", { method: "POST", body: fd })
@@ -180,7 +180,7 @@ export default function AdminBibliotecaPage() {
           <div>
             <label className="block text-xs font-bold text-gray-600 mb-2">Tipo *</label>
             <div className="flex gap-3">
-              {(["LINK", "PDF"] as const).map((t) => (
+              {(["LINK", "PDF", "EXCEL"] as const).map((t) => (
                 <button
                   key={t}
                   type="button"
@@ -191,7 +191,7 @@ export default function AdminBibliotecaPage() {
                       : "bg-white text-gray-600 border-gray-200 hover:border-red-300"
                   }`}
                 >
-                  {t === "PDF" ? "📄 Archivo PDF" : "🔗 Link externo"}
+                  {t === "PDF" ? "📄 PDF" : t === "EXCEL" ? "📊 Excel" : "🔗 Link externo"}
                 </button>
               ))}
             </div>
@@ -209,7 +209,7 @@ export default function AdminBibliotecaPage() {
                 className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
               />
             </div>
-          ) : (
+          ) : form.tipo === "PDF" ? (
             <div>
               <label className="block text-xs font-bold text-gray-600 mb-1">Archivo PDF *</label>
               <input
@@ -219,6 +219,18 @@ export default function AdminBibliotecaPage() {
                 accept=".pdf"
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
                 className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-400 bg-white file:mr-3 file:bg-red-50 file:text-red-700 file:border-0 file:rounded-lg file:px-3 file:py-1 file:text-xs file:font-bold"
+              />
+            </div>
+          ) : (
+            <div>
+              <label className="block text-xs font-bold text-gray-600 mb-1">Archivo Excel *</label>
+              <input
+                ref={fileRef}
+                required
+                type="file"
+                accept=".xlsx,.xls"
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-400 bg-white file:mr-3 file:bg-green-50 file:text-green-700 file:border-0 file:rounded-lg file:px-3 file:py-1 file:text-xs file:font-bold"
               />
             </div>
           )}
@@ -252,9 +264,9 @@ export default function AdminBibliotecaPage() {
               className="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-4"
             >
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 ${
-                r.tipo === "PDF" ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"
+                r.tipo === "PDF" ? "bg-red-50" : r.tipo === "EXCEL" ? "bg-green-50" : "bg-blue-50"
               }`}>
-                {r.tipo === "PDF" ? "📄" : "🔗"}
+                {r.tipo === "PDF" ? "📄" : r.tipo === "EXCEL" ? "📊" : "🔗"}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">

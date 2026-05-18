@@ -21,8 +21,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No se recibió archivo" }, { status: 400 })
     }
 
-    if (file.type !== "application/pdf") {
-      return NextResponse.json({ error: "Solo se aceptan archivos PDF" }, { status: 400 })
+    const TIPOS_PERMITIDOS = [
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.ms-excel",
+    ]
+    if (!TIPOS_PERMITIDOS.includes(file.type)) {
+      return NextResponse.json({ error: "Solo se aceptan archivos PDF o Excel" }, { status: 400 })
     }
 
     const MAX_SIZE = 20 * 1024 * 1024 // 20 MB
@@ -30,6 +35,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "El archivo supera los 20 MB" }, { status: 400 })
     }
 
+    const isExcel = file.type !== "application/pdf"
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
@@ -39,7 +45,7 @@ export async function POST(req: NextRequest) {
           {
             resource_type: "raw",
             folder: "escuela-capacitacion",
-            format: "pdf",
+            ...(isExcel ? {} : { format: "pdf" }),
             use_filename: true,
             unique_filename: true,
           },

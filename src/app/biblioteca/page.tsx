@@ -79,9 +79,9 @@ export default async function BibliotecaPage({
               className="group bg-white rounded-xl border border-gray-200 p-5 hover:border-red-300 hover:shadow-sm transition-all flex items-start gap-4"
             >
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 ${
-                r.tipo === "PDF" ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"
+                r.tipo === "PDF" ? "bg-red-50" : r.tipo === "EXCEL" ? "bg-green-50" : "bg-blue-50"
               }`}>
-                {r.tipo === "PDF" ? "📄" : "🔗"}
+                {r.tipo === "PDF" ? "📄" : r.tipo === "EXCEL" ? "📊" : "🔗"}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
