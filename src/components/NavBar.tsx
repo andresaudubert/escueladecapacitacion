@@ -18,11 +18,13 @@ const EXTERNAL_LINKS = [
     href:  "https://capacitacion.fundacionbancopampa.com.ar/",
     label: "Campus BLP",
     title: "Campus Virtual — Fundación Banco de La Pampa",
+    logo:  "/logo-blp.png",
   },
   {
     href:  "https://campus.anbvirtual.org.ar/",
     label: "Campus ANB",
     title: "Campus Virtual — Academia Nacional de Bomberos",
+    logo:  "/logo-anb.png",
   },
 ]
 
@@ -72,9 +74,15 @@ export default function NavBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     title={ext.title}
-                    className="px-3 py-2 rounded-lg text-sm font-semibold transition-colors text-gray-600 hover:bg-gray-100 hover:text-gray-900 flex items-center gap-1"
+                    className="px-3 py-2 rounded-lg text-sm font-semibold transition-colors text-gray-600 hover:bg-gray-100 hover:text-gray-900 flex items-center gap-1.5"
                   >
-                    <span className="text-[10px]">↗</span>
+                    <Image
+                      src={ext.logo}
+                      alt={ext.label}
+                      width={20}
+                      height={20}
+                      className="rounded-sm object-contain shrink-0"
+                    />
                     {ext.label}
                   </a>
                 ))}
@@ -123,9 +131,15 @@ export default function NavBar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setOpen(false)}
-                    className="px-4 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100 flex items-center gap-1.5"
+                    className="px-4 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100 flex items-center gap-2"
                   >
-                    <span className="text-[10px]">↗</span>
+                    <Image
+                      src={ext.logo}
+                      alt={ext.label}
+                      width={22}
+                      height={22}
+                      className="rounded-sm object-contain shrink-0"
+                    />
                     {ext.label}
                   </a>
                 ))}
