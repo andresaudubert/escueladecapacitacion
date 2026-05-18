@@ -54,16 +54,102 @@ function TabOrganigrama() {
 
 function TabHistoria() {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-8 max-w-3xl">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-xl">📖</div>
-        <h3 className="text-base font-black text-gray-900 uppercase tracking-wide">Historia de la Escuela</h3>
-      </div>
-      <div className="space-y-4 text-sm text-gray-500 leading-relaxed">
-        <p className="italic text-gray-400 border-l-4 border-orange-200 pl-4">
-          El contenido de esta sección está en elaboración y será publicado próximamente.
+    <div className="max-w-3xl space-y-5">
+
+      {/* Intro */}
+      <div className="bg-white rounded-2xl border border-gray-200 p-7">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-xl shrink-0">📖</div>
+          <h3 className="text-base font-black text-gray-900 uppercase tracking-wide">Historia de la Escuela</h3>
+        </div>
+        <p className="text-sm text-gray-600 leading-relaxed">
+          La Escuela de Capacitación no nació de un día para otro: fue el resultado de un proceso gradual
+          que comenzó mucho antes de que existiera una estructura formal. Su historia refleja el mismo espíritu
+          que define al bombero voluntario — la iniciativa, la colaboración y el compromiso con la formación continua.
         </p>
       </div>
+
+      {/* Línea de tiempo */}
+      <div className="bg-white rounded-2xl border border-gray-200 p-7">
+        <h4 className="text-sm font-black text-gray-900 uppercase tracking-widest mb-6">Línea de tiempo</h4>
+
+        <div className="space-y-0">
+
+          {/* Hito 1 */}
+          <div className="flex gap-4">
+            <div className="flex flex-col items-center">
+              <div className="w-3 h-3 rounded-full bg-orange-400 shrink-0 mt-1" />
+              <div className="w-px flex-1 bg-orange-100 mt-1" />
+            </div>
+            <div className="pb-7">
+              <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1">1994 — Los primeros pasos</p>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Con la conformación de la Federación Pampeana, cada cuartel capacitaba y aprobaba a sus propios bomberos
+                de manera independiente. Sin embargo, rápidamente surgió la inquietud de compartir experiencias: los jefes
+                de cuerpo comenzaron a ponerse de acuerdo para realizar prácticas conjuntas entre cuarteles y transmitirse
+                novedades en materia de capacitación, aún sin ninguna estructura formal que los respaldara.
+              </p>
+            </div>
+          </div>
+
+          {/* Hito 2 */}
+          <div className="flex gap-4">
+            <div className="flex flex-col items-center">
+              <div className="w-3 h-3 rounded-full bg-orange-400 shrink-0 mt-1" />
+              <div className="w-px flex-1 bg-orange-100 mt-1" />
+            </div>
+            <div className="pb-7">
+              <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1">15 de junio de 2002 — Creación oficial</p>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Por acta de la Comisión Directiva de la Federación quedó establecida formalmente la
+                <strong className="text-gray-800"> Escuela Provincial de Capacitación</strong>, dando origen a la estructura que existe hoy.
+                A partir de ese momento se comenzó a uniformar los criterios de formación del bombero voluntario
+                en toda la provincia: se organizaron prácticas conjuntas con metodología común y se elaboraron
+                los primeros manuales básicos para que todos los aspirantes pampeanos accedieran a los mismos contenidos,
+                independientemente de su localidad.
+              </p>
+            </div>
+          </div>
+
+          {/* Hito 3 */}
+          <div className="flex gap-4">
+            <div className="flex flex-col items-center">
+              <div className="w-3 h-3 rounded-full bg-orange-400 shrink-0 mt-1" />
+              <div className="w-px flex-1 bg-orange-100 mt-1" />
+            </div>
+            <div className="pb-7">
+              <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1">Consolidación — Escuelas zonales y especialidades</p>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Con el crecimiento del sistema, la Escuela se estructuró en <strong className="text-gray-800">escuelas zonales</strong> distribuidas
+                en las seis zonas operativas de la provincia, acercando la capacitación a cada región. En paralelo, se
+                conformaron los <strong className="text-gray-800">departamentos de especialidades</strong> — Fuego, Socorrismo, Rescate Vehicular,
+                Materiales Peligrosos, entre otros — permitiendo una formación más profunda y específica para quienes
+                se dedicaban a cada área. Los manuales también fueron actualizados y enriquecidos para reflejar
+                los nuevos estándares técnicos y operativos.
+              </p>
+            </div>
+          </div>
+
+          {/* Hito 4 */}
+          <div className="flex gap-4">
+            <div className="flex flex-col items-center">
+              <div className="w-3 h-3 rounded-full bg-orange-500 shrink-0 mt-1" />
+            </div>
+            <div className="pb-2">
+              <p className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1">Presente — Educación técnico profesional</p>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                El paso más reciente y significativo en la historia de la Escuela fue la incorporación de la formación
+                bomberil al sistema de <strong className="text-gray-800">educación técnico profesional</strong> formal, a través de la carrera de
+                Bombero Nivel Uno. Esta iniciativa representa un salto cualitativo: la capacitación deja de ser
+                exclusivamente interna para convertirse en una formación con reconocimiento oficial, obligatoria
+                para todos los ingresantes a los cuerpos de bomberos voluntarios de la provincia.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   )
 }
