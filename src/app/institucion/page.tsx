@@ -160,9 +160,17 @@ function TabFederacion() {
 
       {/* Intro */}
       <div className="bg-white rounded-2xl border border-gray-200 p-7">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-xl shrink-0">🤝</div>
-          <h3 className="text-base font-black text-gray-900 uppercase tracking-wide">La Federación</h3>
+        <div className="flex flex-col sm:flex-row items-center gap-6 mb-5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-federacion.png"
+            alt="Logo Federación de Bomberos Voluntarios de La Pampa"
+            className="w-28 h-28 object-contain shrink-0"
+          />
+          <div>
+            <h3 className="text-base font-black text-gray-900 uppercase tracking-wide mb-1">La Federación</h3>
+            <p className="text-xs text-gray-400">Federación de Asociaciones de Cuerpos de Bomberos Voluntarios de la Provincia de La Pampa</p>
+          </div>
         </div>
         <p className="text-sm text-gray-600 leading-relaxed">
           La <strong className="text-gray-800">Federación de Asociaciones de Cuerpos de Bomberos Voluntarios de la Provincia de La Pampa</strong> —

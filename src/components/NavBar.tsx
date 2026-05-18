@@ -6,11 +6,24 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 const NAV_LINKS = [
-  { href: "/",            label: "Inicio" },
-  { href: "/institucion", label: "Institución" },
-  { href: "/biblioteca",  label: "Biblioteca" },
-  { href: "/contacto",    label: "Contacto" },
-  { href: "/campus",      label: "Campus" },
+  { href: "/",            label: "Inicio",      external: false },
+  { href: "/institucion", label: "Institución", external: false },
+  { href: "/biblioteca",  label: "Biblioteca",  external: false },
+  { href: "/contacto",    label: "Contacto",    external: false },
+  { href: "/campus",      label: "Campus",      external: false },
+]
+
+const EXTERNAL_LINKS = [
+  {
+    href:  "https://capacitacion.fundacionbancopampa.com.ar/",
+    label: "Campus BLP",
+    title: "Campus Virtual — Fundación Banco de La Pampa",
+  },
+  {
+    href:  "https://campus.anbvirtual.org.ar/",
+    label: "Campus ANB",
+    title: "Campus Virtual — Academia Nacional de Bomberos",
+  },
 ]
 
 export default function NavBar() {
@@ -46,20 +59,39 @@ export default function NavBar() {
           {NAV_LINKS.map((link) => {
             const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
             const isCampus = link.href === "/campus"
+
+            /* Insertar botones externos antes de Contacto */
+            const isContacto = link.href === "/contacto"
+
             return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
-                  isCampus
-                    ? "bg-orange-500 hover:bg-orange-400 text-white ml-2"
-                    : isActive
-                    ? "bg-orange-50 text-orange-600"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                }`}
-              >
-                {link.label}
-              </Link>
+              <>
+                {isContacto && EXTERNAL_LINKS.map((ext) => (
+                  <a
+                    key={ext.href}
+                    href={ext.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={ext.title}
+                    className="px-3 py-2 rounded-lg text-sm font-semibold transition-colors text-gray-600 hover:bg-gray-100 hover:text-gray-900 flex items-center gap-1"
+                  >
+                    <span className="text-[10px]">↗</span>
+                    {ext.label}
+                  </a>
+                ))}
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                    isCampus
+                      ? "bg-orange-500 hover:bg-orange-400 text-white ml-2"
+                      : isActive
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </>
             )
           })}
         </nav>
@@ -81,21 +113,37 @@ export default function NavBar() {
           {NAV_LINKS.map((link) => {
             const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
             const isCampus = link.href === "/campus"
+            const isContacto = link.href === "/contacto"
             return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                  isCampus
-                    ? "bg-orange-500 text-white"
-                    : isActive
-                    ? "bg-orange-50 text-orange-600"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
-              >
-                {link.label}
-              </Link>
+              <>
+                {isContacto && EXTERNAL_LINKS.map((ext) => (
+                  <a
+                    key={ext.href}
+                    href={ext.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="px-4 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-gray-100 flex items-center gap-1.5"
+                  >
+                    <span className="text-[10px]">↗</span>
+                    {ext.label}
+                  </a>
+                ))}
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                    isCampus
+                      ? "bg-orange-500 text-white"
+                      : isActive
+                      ? "bg-orange-50 text-orange-600"
+                      : "text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </>
             )
           })}
         </nav>
